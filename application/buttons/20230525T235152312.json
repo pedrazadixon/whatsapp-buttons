@@ -1,0 +1,41 @@
+{
+    "description": "boton para etb",
+    "enable": true,
+    "schedules": {
+        "monday": {
+            "enable": true,
+            "from": "07:00",
+            "ultil": "17:30"
+        },
+        "tuesday": {
+            "enable": true,
+            "from": "07:00",
+            "ultil": "17:30"
+        },
+        "wednesday": {
+            "enable": true,
+            "from": "07:00",
+            "ultil": "17:30"
+        },
+        "thursday": {
+            "enable": true,
+            "from": "07:00",
+            "ultil": "17:30"
+        },
+        "friday": {
+            "enable": true,
+            "from": "07:00",
+            "ultil": "17:30"
+        },
+        "saturday": {
+            "enable": true,
+            "from": "07:00",
+            "ultil": "17:30"
+        },
+        "sunday": {
+            "enable": true,
+            "from": "07:00",
+            "ultil": "17:30"
+        }
+    }
+}
