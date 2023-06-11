@@ -24,6 +24,7 @@
                         <td>
                             <a href="<?php echo site_url('buttons/edit/' . $file["b64_filename"]); ?>" class="btn btn-primary">Edit</a>
                             <a href="<?php echo site_url('buttons/deploy/' . $file["b64_filename"]); ?>" class="btn btn-info">Deploy</a>
+                            <a href="<?php echo site_url('buttons/delete/' . $file["b64_filename"]); ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
                         </td>
                     </tr>
                 <?php endforeach ?>

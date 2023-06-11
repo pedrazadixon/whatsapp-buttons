@@ -83,6 +83,9 @@ class Buttons extends CI_Controller
 			$json_name = $button_path . DIRECTORY_SEPARATOR . date('Ymd\THisv') . '.json';
 
 			file_put_contents($json_name, json_encode($jsonData));
+
+			// redirect to index
+			redirect('buttons');
 		}
 
 
@@ -152,6 +155,26 @@ class Buttons extends CI_Controller
 
 
 		$this->load->view('layout', ['content' => $this->load->view('buttons/edit', $existingData, true)]);
+	}
+
+	public function delete($b64_filename = null)
+	{
+		$button_path = $this->buttons_dir;
+		$json_name = $button_path . DIRECTORY_SEPARATOR . base64_decode($b64_filename) . '.json';
+		$css_name = $button_path . DIRECTORY_SEPARATOR . base64_decode($b64_filename) . '.css';
+
+		// Comprueba si el archivo existe antes de intentar eliminarlo
+		if (file_exists($json_name)) {
+			unlink($json_name);
+		}
+
+		// Aquí asumo que también quieres eliminar el archivo .css correspondiente
+		if (file_exists($css_name)) {
+			unlink($css_name);
+		}
+
+		// redirigir al index después de eliminar
+		redirect('buttons');
 	}
 
 
