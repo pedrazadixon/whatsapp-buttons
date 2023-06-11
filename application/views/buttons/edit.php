@@ -1,49 +1,49 @@
 <div class="row p-3">
     <div class="col">
-        <h3>Create</h3>
+        <h3>Edit</h3>
     </div>
 </div>
+
 
 <div class="px-3">
     <div class="row mb-3">
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <?= form_open('buttons/create') ?>
+                    <?= form_open('buttons/edit/' . ($filename ?? '')) ?>
 
                     <label for="description">Descripción</label>
-                    <input type="text" id="description" name="description" require>
+                    <input type="text" id="description" name="description" value="<?= $description ?? '' ?>">
 
                     <label for="enable">Habilitado</label>
-                    <input type="checkbox" id="enable" name="enable">
+                    <input type="checkbox" id="enable" name="enable" <?= $enable ? 'checked' : '' ?>>
 
                     <?php
                     $dias = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
                     foreach ($dias as $dia) {
+                        $schedule = $schedules[$dia] ?? null;
                     ?>
                         <h3><?= ucfirst($dia) ?></h3>
 
                         <label for="<?= $dia ?>_enable">Habilitado</label>
-                        <input type="checkbox" id="<?= $dia ?>_enable" name="<?= $dia ?>_enable" class="day_enable">
+                        <input type="checkbox" id="<?= $dia ?>_enable" name="<?= $dia ?>_enable" class="day_enable" <?= $schedule['enable'] ? 'checked' : '' ?>>
 
                         <label for="<?= $dia ?>_from">Desde</label>
-                        <input type="time" id="<?= $dia ?>_from" name="<?= $dia ?>_from" class="<?= $dia ?>_time">
+                        <input type="time" id="<?= $dia ?>_from" name="<?= $dia ?>_from" class="<?= $dia ?>_time" value="<?= $schedule['from'] ?? '' ?>">
 
                         <label for="<?= $dia ?>_until">Hasta</label>
-                        <input type="time" id="<?= $dia ?>_until" name="<?= $dia ?>_until" class="<?= $dia ?>_time">
+                        <input type="time" id="<?= $dia ?>_until" name="<?= $dia ?>_until" class="<?= $dia ?>_time" value="<?= $schedule['until'] ?? '' ?>">
 
                     <?php
                     }
                     ?>
 
-<input type="submit" class="btn btn-primary" name="submit" value="Guardar">
+                    <input type="submit" class="btn btn-primary" name="submit" value="Guardar">
 
                     <?= form_close() ?>
 
-
                 </div>
-               
             </div>
         </div>
     </div>
@@ -65,10 +65,8 @@
             var timeFields = $('.' + day + '_time');
 
             if (this.checked) {
-                // Si el checkbox está marcado, establecer los campos de tiempo como requeridos
                 timeFields.prop('required', true);
             } else {
-                // Si el checkbox no está marcado, eliminar el atributo requerido de los campos de tiempo
                 timeFields.prop('required', false);
             }
         });

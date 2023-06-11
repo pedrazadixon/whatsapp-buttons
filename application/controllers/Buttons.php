@@ -28,10 +28,132 @@ class Buttons extends CI_Controller
 		], true),]);
 	}
 
+
 	public function create()
 	{
+		$this->load->helper('form');
+
+		if ($this->input->method() == 'post') {
+			$data = $this->input->post();
+
+			// Reestructura los datos del formulario en la estructura que deseas para tu archivo JSON.
+			$jsonData = array(
+				'description' => $data['description'],
+				'enable' => isset($data['enable']),
+				'schedules' => array(
+					'monday' => array(
+						'enable' => isset($data['monday_enable']),
+						'from' => $data['monday_from'],
+						'until' => $data['monday_until']
+					),
+					'tuesday' => array(
+						'enable' => isset($data['tuesday_enable']),
+						'from' => $data['tuesday_from'],
+						'until' => $data['tuesday_until']
+					),
+					'wednesday' => array(
+						'enable' => isset($data['wednesday_enable']),
+						'from' => $data['wednesday_from'],
+						'until' => $data['wednesday_until']
+					),
+					'thursday' => array(
+						'enable' => isset($data['thursday_enable']),
+						'from' => $data['thursday_from'],
+						'until' => $data['thursday_until']
+					),
+					'friday' => array(
+						'enable' => isset($data['friday_enable']),
+						'from' => $data['friday_from'],
+						'until' => $data['friday_until']
+					),
+					'saturday' => array(
+						'enable' => isset($data['saturday_enable']),
+						'from' => $data['saturday_from'],
+						'until' => $data['saturday_until']
+					),
+					'sunday' => array(
+						'enable' => isset($data['sunday_enable']),
+						'from' => $data['sunday_from'],
+						'until' => $data['sunday_until']
+					)
+				)
+			);
+
+			$button_path = $this->buttons_dir;
+			$json_name = $button_path . DIRECTORY_SEPARATOR . date('Ymd\THisv') . '.json';
+
+			file_put_contents($json_name, json_encode($jsonData));
+		}
+
+
 		$this->load->view('layout', ['content' => $this->load->view('buttons/create', null, true)]);
 	}
+
+	public function edit($b64_filename = null)
+	{
+		$this->load->helper('form');
+
+		$button_path = $this->buttons_dir;
+		$json_name = $button_path . DIRECTORY_SEPARATOR . base64_decode($b64_filename) . '.json';
+
+		// Carga los datos existentes si el archivo existe
+		$existingData = file_exists($json_name) ? json_decode(file_get_contents($json_name), true) : [];
+
+		if ($this->input->method() == 'post') {
+			$data = $this->input->post();
+
+			// Reestructura los datos del formulario en la estructura que deseas para tu archivo JSON.
+			$jsonData = array(
+				'description' => $data['description'],
+				'enable' => isset($data['enable']),
+				'schedules' => array(
+					'monday' => array(
+						'enable' => isset($data['monday_enable']),
+						'from' => $data['monday_from'],
+						'until' => $data['monday_until']
+					),
+					'tuesday' => array(
+						'enable' => isset($data['tuesday_enable']),
+						'from' => $data['tuesday_from'],
+						'until' => $data['tuesday_until']
+					),
+					'wednesday' => array(
+						'enable' => isset($data['wednesday_enable']),
+						'from' => $data['wednesday_from'],
+						'until' => $data['wednesday_until']
+					),
+					'thursday' => array(
+						'enable' => isset($data['thursday_enable']),
+						'from' => $data['thursday_from'],
+						'until' => $data['thursday_until']
+					),
+					'friday' => array(
+						'enable' => isset($data['friday_enable']),
+						'from' => $data['friday_from'],
+						'until' => $data['friday_until']
+					),
+					'saturday' => array(
+						'enable' => isset($data['saturday_enable']),
+						'from' => $data['saturday_from'],
+						'until' => $data['saturday_until']
+					),
+					'sunday' => array(
+						'enable' => isset($data['sunday_enable']),
+						'from' => $data['sunday_from'],
+						'until' => $data['sunday_until']
+					)
+				)
+			);
+
+
+			file_put_contents($json_name, json_encode($jsonData));
+		}
+		$existingData['filename'] = $b64_filename;
+
+
+		$this->load->view('layout', ['content' => $this->load->view('buttons/edit', $existingData, true)]);
+	}
+
 
 	public function deploy($b64_filename)
 	{
