@@ -13,6 +13,9 @@ class Buttons extends CI_Controller
 
 	public function index()
 	{
+		
+		$this->load->library('session');
+
 		$json_files = glob($this->buttons_dir  .  "*.json");
 
 		$files = [];
@@ -89,10 +92,10 @@ class Buttons extends CI_Controller
 				$json_name = $button_path . DIRECTORY_SEPARATOR . date('Ymd\THisv') . '.json';
 
 				if (file_put_contents($json_name, json_encode($jsonData))) {
-					$this->session->set_flashdata('success', 'Button created successfully');
+					$this->session->set_flashdata('success', 'Botón creado correctamente');
 					redirect('buttons');
 				} else {
-					$this->session->set_flashdata('error', 'Error while creating the button');
+					$this->session->set_flashdata('error', 'No se pudo crear el botón');
 					$this->load->view('layout', ['content' => $this->load->view('buttons/create', ['data' => ['active_page' => 'buttons']], true)]);
 				}
 			}
@@ -161,9 +164,9 @@ class Buttons extends CI_Controller
 			);
 
 			if (file_put_contents($json_name, json_encode($jsonData))) {
-				$this->session->set_flashdata('success', 'Button edited successfully');
+				$this->session->set_flashdata('success', 'Botón editado correctamente');
 			} else {
-				$this->session->set_flashdata('error', 'Error while editing the button');
+				$this->session->set_flashdata('error', 'No se pudo editar el botón');
 			}
 
 			// redirect to index

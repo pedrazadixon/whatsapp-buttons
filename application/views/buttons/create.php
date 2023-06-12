@@ -1,16 +1,3 @@
-<!-- Justo antes de tu formulario, o donde prefieras mostrar el mensaje -->
-<?php if ($this->session->flashdata('success')) : ?>
-    <div class="alert alert-success alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <?= $this->session->flashdata('success') ?>
-    </div>
-<?php elseif ($this->session->flashdata('error')) : ?>
-    <div class="alert alert-danger alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <?= $this->session->flashdata('error') ?>
-    </div>
-<?php endif; ?>
-
 <!-- Page header -->
 <div class="page-header d-print-none">
     <div class="container-xl">
@@ -30,7 +17,7 @@
 
 <!-- Page body -->
 <div class="page-body">
-    <div class="container-xl">
+    <div class="container-xl">      
         <?php if (validation_errors()) : ?>
             <div class="card mt-2">
                 <div class="card-status-top bg-danger"></div>
