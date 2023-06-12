@@ -31,24 +31,33 @@
 <!-- Page body -->
 <div class="page-body">
     <div class="container-xl">
-        <div class="card">
+    <div class="card mt-2">
+            <div class="card-status-top bg-danger"></div>
+            <?php if (validation_errors()) : ?>
+                <div class="card-body">
+                    <?= validation_errors() ?>
+                </div>
+            <?php endif; ?>
+
+        </div>
+        <div class="card  mt-2">
             <div class="card-body">
                 <?= form_open('buttons/edit/' . ($json['filename'] ?? '')) ?>
                 <div class="row">
                     <div class="col-12">
                         <div class="mb-3">
                             <label class="form-label" for="description">Descripción</label>
-                            <input class="form-control" type="text" id="description" name="description" value="<?= $json['description'] ?? '' ?>" placeholder="Ingrese Descripción">
+                            <input class="form-control" type="text" id="description" name="description" value="<?= set_value('description', $json['description'] ?? '') ?>" placeholder="Ingrese Descripción">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="telephone">Telefono</label>
-                            <input class="form-control" type="text" id="telephone" name="telephone" value="<?= $json['telephone'] ?? '' ?>" placeholder="Ingrese telefono" require>
+                            <input class="form-control" type="text" id="telephone" name="telephone" value="<?= set_value('telephone', $json['telephone'] ?? '') ?>" placeholder="Ingrese telefono" require>
                         </div>
                         <div class="mb-3">
                             <div class="form-label" for="enable">Estado</div>
                             <div>
                                 <label class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="enable" name="enable" <?= $json['enable'] ? 'checked' : '' ?>>
+                                    <input class="form-check-input" type="checkbox" id="enable" name="enable" <?= set_checkbox('enable', 'on', $json['enable']) ?>>
                                     <span class="form-check-label">Activar</span>
                                 </label>
                             </div>
@@ -73,19 +82,19 @@
                                     <div class="col-lg-3 col-md-12 mb-4">
                                         <h3><?= ucfirst($dia_es) ?></h3>
                                         <div class="form-check mb-3">
-                                            <input class="form-check-input" type="checkbox" id="<?= $dia_en ?>_enable" name="<?= $dia_en ?>_enable" class="day_enable" <?= $schedule['enable'] ? 'checked' : '' ?>>
+                                            <input class="form-check-input day_enable" type="checkbox" id="<?= $dia_en ?>_enable" name="<?= $dia_en ?>_enable" <?= set_checkbox($dia_en . '_enable', 'on', $schedule['enable']) ?>>
                                             <label class="form-check-label" for="<?= $dia_en ?>_enable">Habilitado</label>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-6">
                                                 <label class="form-label" for="<?= $dia_en ?>_from">Desde</label>
-                                                <input class="form-control" type="time" id="<?= $dia_en ?>_from" name="<?= $dia_en ?>_from" class="<?= $dia_en ?>_time" value="<?= $schedule['from'] ?? '' ?>">
+                                                <input class="form-control <?= $dia_en ?>_time" type="time" id="<?= $dia_en ?>_from" name="<?= $dia_en ?>_from" value="<?= set_value($dia_en . '_from', $schedule['from'] ?? '') ?>">
                                             </div>
 
                                             <div class="col-6">
                                                 <label class="form-label" for="<?= $dia_en ?>_until">Hasta</label>
-                                                <input class="form-control" type="time" id="<?= $dia_en ?>_until" name="<?= $dia_en ?>_until" class="<?= $dia_en ?>_time" value="<?= $schedule['until'] ?? '' ?>">
+                                                <input class="form-control <?= $dia_en ?>_time" type="time" id="<?= $dia_en ?>_until" name="<?= $dia_en ?>_until" value="<?= set_value($dia_en . '_until', $schedule['until'] ?? '') ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -100,7 +109,6 @@
 
                         <?= form_close() ?>
 
-
                     </div>
 
                 </div>
@@ -108,7 +116,6 @@
         </div>
     </div>
 </div>
-
 
 <script>
     $(document).ready(function() {
@@ -123,5 +130,8 @@
                 timeFields.prop('required', false);
             }
         });
+
+        // Trigger para configurar correctamente los campos requeridos al cargar la página
+        $(".day_enable").trigger('change');
     });
 </script>

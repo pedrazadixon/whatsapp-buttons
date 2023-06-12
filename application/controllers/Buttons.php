@@ -35,70 +35,71 @@ class Buttons extends CI_Controller
 	public function create()
 	{
 		$this->load->helper('form');
+		$this->load->library('form_validation');
 		$this->load->library('session');
 
 		if ($this->input->method() == 'post') {
 			$data = $this->input->post();
 
-			// Reestructura los datos del formulario en la estructura que deseas para tu archivo JSON.
-			$jsonData = array(
-				'description' => $data['description'],
-				'enable' => isset($data['enable']),
-				'telephone' => $data['telephone'],
-				'schedules' => array(
-					'monday' => array(
-						'enable' => isset($data['monday_enable']),
-						'from' => $data['monday_from'],
-						'until' => $data['monday_until']
-					),
-					'tuesday' => array(
-						'enable' => isset($data['tuesday_enable']),
-						'from' => $data['tuesday_from'],
-						'until' => $data['tuesday_until']
-					),
-					'wednesday' => array(
-						'enable' => isset($data['wednesday_enable']),
-						'from' => $data['wednesday_from'],
-						'until' => $data['wednesday_until']
-					),
-					'thursday' => array(
-						'enable' => isset($data['thursday_enable']),
-						'from' => $data['thursday_from'],
-						'until' => $data['thursday_until']
-					),
-					'friday' => array(
-						'enable' => isset($data['friday_enable']),
-						'from' => $data['friday_from'],
-						'until' => $data['friday_until']
-					),
-					'saturday' => array(
-						'enable' => isset($data['saturday_enable']),
-						'from' => $data['saturday_from'],
-						'until' => $data['saturday_until']
-					),
-					'sunday' => array(
-						'enable' => isset($data['sunday_enable']),
-						'from' => $data['sunday_from'],
-						'until' => $data['sunday_until']
-					)
-				)
-			);
+			// Set validation rules
+			$this->form_validation->set_rules('description', 'Descripción', 'required');
+			$this->form_validation->set_rules('telephone', 'Telefono', 'required');
 
-			$button_path = $this->buttons_dir;
-			$json_name = $button_path . DIRECTORY_SEPARATOR . date('Ymd\THisv') . '.json';
+			// Mapeo de los nombres de los días en inglés a español
+			$day_names = [
+				'monday' => 'Lunes',
+				'tuesday' => 'Martes',
+				'wednesday' => 'Miércoles',
+				'thursday' => 'Jueves',
+				'friday' => 'Viernes',
+				'saturday' => 'Sábado',
+				'sunday' => 'Domingo'
+			];
 
-			if (file_put_contents($json_name, json_encode($jsonData))) {
-				$this->session->set_flashdata('success', 'Button created successfully');
-			} else {
-				$this->session->set_flashdata('error', 'Error while creating the button');
+			// Dynamic day time validation
+			foreach ($day_names as $day_in_english => $day_in_spanish) {
+				if (isset($data[$day_in_english . '_enable']) && $data[$day_in_english . '_enable'] == 'on') {
+					$this->form_validation->set_rules($day_in_english . '_from', 'Hora de inicio del ' . $day_in_spanish, 'required');
+					$this->form_validation->set_rules($day_in_english . '_until', 'Hora de finalización del ' . $day_in_spanish, 'required');
+				}
 			}
 
-			// redirect to index
-			redirect('buttons');
+			if ($this->form_validation->run() == FALSE) {
+				$this->load->view('layout', ['content' => $this->load->view('buttons/create', ['data' => ['active_page' => 'buttons']], true)]);
+			} else {
+				// Validation passed
+
+				$jsonData = array(
+					'description' => $data['description'],
+					'enable' => isset($data['enable']),
+					'telephone' => $data['telephone'],
+					'schedules' => array()
+				);
+
+				foreach ($day_names as $day_in_english => $day_in_spanish) {
+					$jsonData['schedules'][$day_in_english] = array(
+						'enable' => isset($data[$day_in_english . '_enable']),
+						'from' => isset($data[$day_in_english . '_from']) ? $data[$day_in_english . '_from'] : null,
+						'until' => isset($data[$day_in_english . '_until']) ? $data[$day_in_english . '_until'] : null,
+					);
+				}
+
+				// Guardar el JSON
+				$button_path = $this->buttons_dir;
+				$json_name = $button_path . DIRECTORY_SEPARATOR . date('Ymd\THisv') . '.json';
+
+				if (file_put_contents($json_name, json_encode($jsonData))) {
+					$this->session->set_flashdata('success', 'Button created successfully');
+					redirect('buttons');
+				} else {
+					$this->session->set_flashdata('error', 'Error while creating the button');
+					$this->load->view('layout', ['content' => $this->load->view('buttons/create', ['data' => ['active_page' => 'buttons']], true)]);
+				}
+			}
+		} else {
+			// Not a POST request
+			$this->load->view('layout', ['content' => $this->load->view('buttons/create', ['data' => ['active_page' => 'buttons']], true)]);
 		}
-
-
-		$this->load->view('layout', ['content' => $this->load->view('buttons/create', ['data' => ['active_page' => 'buttons']], true)]);
 	}
 
 	public function edit($b64_filename = null)
@@ -228,7 +229,7 @@ class Buttons extends CI_Controller
 		$now = new DateTime();
 		$dayOfWeek = strtolower($now->format('l')); // Devuelve "monday", "tuesday", etc.
 		$currentTime = $now->format('H:i');
-		
+
 		// Verifica si el botón debe estar activado
 		$isActive = $data['enable'] &&
 			$data['schedules'][$dayOfWeek]['enable'] &&

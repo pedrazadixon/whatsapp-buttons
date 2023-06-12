@@ -5,10 +5,10 @@
             <div class="col">
                 <!-- Page pre-title -->
                 <div class="page-pretitle">
-                    Buttons
+                    Btón
                 </div>
                 <h2 class="page-title">
-                    Deploy Buttons
+                    Desplegar Botón
                 </h2>
             </div>
         </div>
@@ -19,7 +19,7 @@
     <div class="container-xl">
         <div class="card">
             <div class="card-body">
-                <p>Please paste this code before close body tag in your site.</p>
+                <p>Pegue este código antes de cerrar la etiqueta del cuerpo en su sitio.</p>
                 <code lang="javascript">
                     <pre><?php echo $script ?></pre>
                 </code>
