@@ -13,6 +13,7 @@ class Buttons extends CI_Controller
 
 	public function index()
 	{
+		$data['active_page'] = 'buttons';
 		$json_files = glob($this->buttons_dir  .  "*.json");
 
 		$files = [];
@@ -25,6 +26,7 @@ class Buttons extends CI_Controller
 
 		$this->load->view('layout', ['content' => $this->load->view('buttons/index', [
 			'files' => $files,
+			'data' => $data
 		], true),]);
 	}
 
@@ -32,6 +34,8 @@ class Buttons extends CI_Controller
 	public function create()
 	{
 		$this->load->helper('form');
+		
+		$this->load->library('session');
 
 		if ($this->input->method() == 'post') {
 			$data = $this->input->post();
@@ -82,7 +86,11 @@ class Buttons extends CI_Controller
 			$button_path = $this->buttons_dir;
 			$json_name = $button_path . DIRECTORY_SEPARATOR . date('Ymd\THisv') . '.json';
 
-			file_put_contents($json_name, json_encode($jsonData));
+			if (file_put_contents($json_name, json_encode($jsonData))) {
+				$this->session->set_flashdata('success', 'Button created successfully');
+			} else {
+				$this->session->set_flashdata('error', 'Error while creating the button');
+			}
 
 			// redirect to index
 			redirect('buttons');
@@ -95,6 +103,7 @@ class Buttons extends CI_Controller
 	public function edit($b64_filename = null)
 	{
 		$this->load->helper('form');
+		$this->load->library('session');
 
 		$button_path = $this->buttons_dir;
 		$json_name = $button_path . DIRECTORY_SEPARATOR . base64_decode($b64_filename) . '.json';
@@ -149,7 +158,11 @@ class Buttons extends CI_Controller
 			);
 
 
-			file_put_contents($json_name, json_encode($jsonData));
+			if (file_put_contents($json_name, json_encode($jsonData))) {
+				$this->session->set_flashdata('success', 'Button edited successfully');
+			} else {
+				$this->session->set_flashdata('error', 'Error while editing the button');
+			}
 		}
 		$existingData['filename'] = $b64_filename;
 
