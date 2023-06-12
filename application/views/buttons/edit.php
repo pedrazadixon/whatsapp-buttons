@@ -19,7 +19,7 @@
             <div class="col">
                 <!-- Page pre-title -->
                 <div class="page-pretitle">
-                    Buttons
+                    Botón
                 </div>
                 <h2 class="page-title">
                     Editar Botón
