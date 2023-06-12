@@ -21,7 +21,7 @@
                              <path d="M12 5l0 14" />
                              <path d="M5 12l14 0" />
                          </svg>
-                         New button
+                        Nuevo Botón
                      </a>
                      <a href="#" class="btn btn-primary d-sm-none btn-icon">
                          <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -48,8 +48,8 @@
                              <thead>
                                  <tr>
                                      <th>Id</th>
-                                     <th>Description</th>
-                                     <th>Status</th>
+                                     <th>Descripción</th>
+                                     <th>Estado</th>
                                      <th class="w-1"></th>
                                  </tr>
                              </thead>
@@ -62,9 +62,9 @@
                                          <td> <span class="badge  <?= ($file["content"]['enable'])? 'bg-green': 'bg-red' ?>  "><?= ($file["content"]['enable'])? 'Active': 'Disable' ?></span></td>
                                          <td>
                                              <div class="btn-list flex-nowrap">
-                                                 <a href="<?php echo site_url('buttons/edit/' . $file["b64_filename"]); ?>" class="btn btn-primary">Edit</a>
-                                                 <a href="<?php echo site_url('buttons/deploy/' . $file["b64_filename"]); ?>" class="btn btn-dark">Deploy</a>
-                                                 <a href="<?php echo site_url('buttons/delete/' . $file["b64_filename"]); ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
+                                                 <a href="<?php echo site_url('buttons/edit/' . $file["b64_filename"]); ?>" class="btn btn-primary">Editar</a>
+                                                 <a href="<?php echo site_url('buttons/deploy/' . $file["b64_filename"]); ?>" class="btn btn-dark">Desplegar</a>
+                                                 <a href="<?php echo site_url('buttons/delete/' . $file["b64_filename"]); ?>" class="btn btn-danger" onclick="return confirm('¿Esta seguro que desea eliminar este item?');">Eliminar</a>
 
                                              </div>
 

@@ -109,7 +109,7 @@ if (isset($data)) {
                                     </svg>
                                 </span>
                                 <span class="nav-link-title">
-                                    Home
+                                    Dashboard
                                 </span>
                             </a>
                         </li>
@@ -124,7 +124,7 @@ if (isset($data)) {
                                     </svg>
                                 </span>
                                 <span class="nav-link-title">
-                                    Buttons
+                                    Botones
                                 </span>
                             </a>
                         </li>
@@ -170,8 +170,8 @@ if (isset($data)) {
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                            <a href="#" class="dropdown-item">Profile</a>
-                            <a href="#" class="dropdown-item">Settings</a>
+                            <a href="#" class="dropdown-item">Perfil</a>
+                            <a href="#" class="dropdown-item">Configuración</a>
                             <a href="#" class="dropdown-item">Logout</a>
                         </div>
                     </div>
