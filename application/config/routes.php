@@ -55,6 +55,6 @@ $route['buttons/deploy/(:any)'] = 'buttons/deploy/$1';
 $route['buttons/js/(:any).js'] = 'buttons/js/$1';
 $route['buttons/css/(:any).css'] = 'buttons/css/$1';
 
-$route['default_controller'] = 'buttons';
+$route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
