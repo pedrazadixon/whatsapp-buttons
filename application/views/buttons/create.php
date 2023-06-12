@@ -40,7 +40,10 @@
                                <label class="form-label" for="description">Descripción</label>
                                <input class="form-control" type="text" id="description" name="description" value="<?= $description ?? '' ?>" placeholder="Input Description" require>
                            </div>
-
+                           <div class="mb-3">
+                               <label class="form-label" for="telephone">Telephone</label>
+                               <input class="form-control" type="text" id="telephone" name="telephone" value="<?= $telephone ?? '' ?>" placeholder="Input telephone" require>
+                           </div>
                            <div class="mb-3">
                                <div class="form-label" for="enable">Status</div>
                                <div>
@@ -54,26 +57,34 @@
                            <div class="mb-3">
                                <div class="row">
                                    <?php
-                                    $dias = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+                                    $dias = [
+                                        'lunes' => 'monday',
+                                        'martes' => 'tuesday',
+                                        'miércoles' => 'wednesday',
+                                        'jueves' => 'thursday',
+                                        'viernes' => 'friday',
+                                        'sábado' => 'saturday',
+                                        'domingo' => 'sunday'
+                                    ];
 
-                                    foreach ($dias as $dia) {
+                                    foreach ($dias as $dia_es => $dia_en) {
                                     ?>
                                        <div class="col-lg-3 col-md-12 mb-4">
-                                           <h3><?= ucfirst($dia) ?></h3>
+                                           <h3><?= ucfirst($dia_es) ?></h3>
                                            <div class="form-check mb-3">
-                                               <input class="form-check-input" type="checkbox" id="<?= $dia ?>_enable" name="<?= $dia ?>_enable" class="day_enable">
-                                               <label class="form-check-label" for="<?= $dia ?>_enable">Habilitado</label>
+                                               <input class="form-check-input" type="checkbox" id="<?= $dia_en ?>_enable" name="<?= $dia_en ?>_enable" class="day_enable">
+                                               <label class="form-check-label" for="<?= $dia_en ?>_enable">Habilitado</label>
                                            </div>
 
                                            <div class="row">
                                                <div class="col-6">
-                                                   <label class="form-label" for="<?= $dia ?>_from">From</label>
-                                                   <input class="form-control" type="time" id="<?= $dia ?>_from" name="<?= $dia ?>_from" class="<?= $dia ?>_time">
+                                                   <label class="form-label" for="<?= $dia_en ?>_from">Desde</label>
+                                                   <input class="form-control" type="time" id="<?= $dia_en ?>_from" name="<?= $dia_en ?>_from" class="<?= $dia_en ?>_time">
                                                </div>
 
                                                <div class="col-6">
-                                                   <label class="form-label" for="<?= $dia ?>_until">Until</label>
-                                                   <input class="form-control" type="time" id="<?= $dia ?>_until" name="<?= $dia ?>_until" class="<?= $dia ?>_time">
+                                                   <label class="form-label" for="<?= $dia_en ?>_until">Hasta</label>
+                                                   <input class="form-control" type="time" id="<?= $dia_en ?>_until" name="<?= $dia_en ?>_until" class="<?= $dia_en ?>_time">
                                                </div>
                                            </div>
                                        </div>
@@ -87,9 +98,7 @@
 
                            <?= form_close() ?>
 
-
                        </div>
-
                    </div>
                </div>
            </div>
@@ -112,5 +121,3 @@
            });
        });
    </script>
-
-

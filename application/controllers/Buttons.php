@@ -44,6 +44,7 @@ class Buttons extends CI_Controller
 			$jsonData = array(
 				'description' => $data['description'],
 				'enable' => isset($data['enable']),
+				'telephone' => $data['telephone'],
 				'schedules' => array(
 					'monday' => array(
 						'enable' => isset($data['monday_enable']),
@@ -118,6 +119,7 @@ class Buttons extends CI_Controller
 			$jsonData = array(
 				'description' => $data['description'],
 				'enable' => isset($data['enable']),
+				'telephone' => $data['telephone'],
 				'schedules' => array(
 					'monday' => array(
 						'enable' => isset($data['monday_enable']),
@@ -162,6 +164,9 @@ class Buttons extends CI_Controller
 			} else {
 				$this->session->set_flashdata('error', 'Error while editing the button');
 			}
+
+			// redirect to index
+			redirect('buttons');
 		}
 
 		$existingData['filename'] = $b64_filename;
@@ -215,30 +220,57 @@ class Buttons extends CI_Controller
 	public function Js($b64_filename)
 	{
 		$css_url = site_url('buttons/css/' . $b64_filename . '.css');
+		$data = json_decode(file_get_contents($this->buttons_dir . DIRECTORY_SEPARATOR . base64_decode($b64_filename) . '.json'), true);
+
+		$telephone = $data['telephone'];
+
+		// Obtén la fecha y hora actuales
+		$now = new DateTime();
+		$dayOfWeek = strtolower($now->format('l')); // Devuelve "monday", "tuesday", etc.
+		$currentTime = $now->format('H:i');
+		
+		// Verifica si el botón debe estar activado
+		$isActive = $data['enable'] &&
+			$data['schedules'][$dayOfWeek]['enable'] &&
+			($data['schedules'][$dayOfWeek]['from'] <= $currentTime || $data['schedules'][$dayOfWeek]['from'] === '') &&
+			($currentTime <= $data['schedules'][$dayOfWeek]['until'] || $data['schedules'][$dayOfWeek]['until'] === '');
+
+		// Si el botón no está activo, devuelve un script vacío
+		if (!$isActive) {
+			return $this->output
+				->set_status_header(200)
+				->set_content_type('application/javascript')
+				->set_output('');
+		}
 
 		$script = <<<SCRIPT
-		(function () {
-			let div = document.createElement("div");
-			div.setAttribute('id', 'whatsapp-buttons-container');
-			div.style.position = 'fixed';
-			div.style.bottom = 0;
-			div.style.right = 0;
-			div.style.zIndex = 999;
-			let shadow = div.attachShadow({ mode: "open" });
-		
-			let link = document.createElement('link');
-			link.setAttribute('rel', 'stylesheet');
-			let id = (Math.random() + 1).toString(36).substring(7);
-			link.setAttribute('href', '{$css_url}?v=' + id);
-			shadow.appendChild(link);
-		
-			let button = document.createElement('div');
-			button.classList.add('btn');
-			// button.textContent = 'button';
-			shadow.appendChild(button);
-		
-			document.body.prepend(div);
-		})();
+			(function () {
+				let div = document.createElement("div");
+				div.setAttribute('id', 'whatsapp-buttons-container');
+				div.style.position = 'fixed';
+				div.style.bottom = 0;
+				div.style.right = 0;
+				div.style.zIndex = 999;
+				let shadow = div.attachShadow({ mode: "open" });
+
+				let link = document.createElement('link');
+				link.setAttribute('rel', 'stylesheet');
+				let id = (Math.random() + 1).toString(36).substring(7);
+				link.setAttribute('href', '{$css_url}?v=' + id);
+				shadow.appendChild(link);
+
+				let button = document.createElement('div');
+				button.classList.add('btn');
+
+				let a = document.createElement('a');
+				a.setAttribute('href', 'https://api.whatsapp.com/send?phone=$telephone');
+				a.setAttribute('target', '_blank');
+				a.appendChild(button);
+
+				shadow.appendChild(a);
+
+				document.body.prepend(div);
+			})(); 
 		SCRIPT;
 
 		return $this->output
@@ -246,6 +278,8 @@ class Buttons extends CI_Controller
 			->set_content_type('application/javascript')
 			->set_output($script);
 	}
+
+
 	public function Css($b64_filename)
 	{
 		$filename = base64_decode($b64_filename);

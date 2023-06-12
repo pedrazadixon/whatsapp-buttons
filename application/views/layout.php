@@ -26,10 +26,8 @@ if (isset($data)) {
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Landinator</title>
     <link href="<?php echo $this->config->item('assets_url'); ?>css/tabler.min.css?1685976624" rel="stylesheet" />
-    <link href="<?php echo $this->config->item('assets_url'); ?>css/tabler-flags.min.css?1685976624" rel="stylesheet" />
-    <link href="<?php echo $this->config->item('assets_url'); ?>css/tabler-payments.min.css?1685976624" rel="stylesheet" />
     <link href="<?php echo $this->config->item('assets_url'); ?>css/tabler-vendors.min.css?1685976624" rel="stylesheet" />
-    <link href="<?php echo $this->config->item('assets_url'); ?>css/demo.min.css?1685976624" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 </head>
 
 <body>
