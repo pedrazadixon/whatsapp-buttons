@@ -126,41 +126,6 @@ if (isset($data)) {
                                 </span>
                             </a>
                         </li>
-                        <li class="nav-item <?php if ($nav_active_item == 'prueba') echo 'active'; ?> dropdown">
-                            <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="true">
-                                <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/layout-2 -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M4 4m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                                        <path d="M4 13m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                                        <path d="M14 4m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                                        <path d="M14 15m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-title">
-                                    Layout
-                                </span>
-                            </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="https://tabler.io/docs" target="_blank" rel="noopener">
-                                    Documentation
-                                </a>
-                                <a class="dropdown-item" href="./changelog.html">
-                                    Changelog
-                                </a>
-                                <a class="dropdown-item" href="https://github.com/tabler/tabler" target="_blank" rel="noopener">
-                                    Source code
-                                </a>
-                                <a class="dropdown-item text-pink" href="https://github.com/sponsors/codecalm" target="_blank" rel="noopener">
-                                    <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
-                                    </svg>
-                                    Sponsor project!
-                                </a>
-                            </div>
-                        </li>
                     </ul>
                 </div>
             </div>
