@@ -21,6 +21,8 @@ class Welcome extends CI_Controller {
 	public function index()
 	{
 		$data['active_page'] = 'home';
-		$this->load->view('layout', ['content' => $this->load->view('welcome_message', $data, true)]);
+		$this->load->view('layout', ['content' => $this->load->view('dashboard/index', [
+			'data' => $data
+		], true),]);
 	}
 }
