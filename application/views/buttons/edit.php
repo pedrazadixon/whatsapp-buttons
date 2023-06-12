@@ -31,15 +31,14 @@
 <!-- Page body -->
 <div class="page-body">
     <div class="container-xl">
-    <div class="card mt-2">
-            <div class="card-status-top bg-danger"></div>
-            <?php if (validation_errors()) : ?>
+        <?php if (validation_errors()) : ?>
+            <div class="card mt-2">
+                <div class="card-status-top bg-danger"></div>
                 <div class="card-body">
                     <?= validation_errors() ?>
                 </div>
-            <?php endif; ?>
-
-        </div>
+            </div>
+        <?php endif; ?>
         <div class="card  mt-2">
             <div class="card-body">
                 <?= form_open('buttons/edit/' . ($json['filename'] ?? '')) ?>
