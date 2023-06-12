@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Buttons extends CI_Controller
+class Uitoolkit extends CI_Controller
 {
 	private $buttons_dir = APPPATH . 'buttons' . DIRECTORY_SEPARATOR;
 
@@ -13,7 +13,7 @@ class Buttons extends CI_Controller
 
 	public function index()
 	{
-		
+
 		$this->load->library('session');
 
 		$json_files = glob($this->buttons_dir  .  "*.json");
@@ -28,9 +28,9 @@ class Buttons extends CI_Controller
 			$files[] = $info;
 		}
 
-		$this->load->view('layout', ['content' => $this->load->view('buttons/index', [
+		$this->load->view('layout', ['content' => $this->load->view('uitoolkit/index', [
 			'files' => $files,
-			'data' => ['active_page' => 'buttons']
+			'data' => ['active_page' => 'uitoolkit']
 		], true),]);
 	}
 
@@ -46,7 +46,6 @@ class Buttons extends CI_Controller
 
 			// Set validation rules
 			$this->form_validation->set_rules('description', 'Descripción', 'required');
-			$this->form_validation->set_rules('telephone', 'Telefono', 'required');
 
 			// Mapeo de los nombres de los días en inglés a español
 			$day_names = [
@@ -68,15 +67,15 @@ class Buttons extends CI_Controller
 			}
 
 			if ($this->form_validation->run() == FALSE) {
-				$this->load->view('layout', ['content' => $this->load->view('buttons/create', ['data' => ['active_page' => 'buttons']], true)]);
+				$this->load->view('layout', ['content' => $this->load->view('uitoolkit/create', ['data' => ['active_page' => 'uitoolkit']], true)]);
 			} else {
 				// Validation passed
 
 				$jsonData = array(
 					'description' => $data['description'],
 					'enable' => isset($data['enable']),
-					'telephone' => $data['telephone'],
-					'schedules' => array()
+					'schedules' => array(),
+					'html_code' => htmlspecialchars(trim($data['html_code'])),
 				);
 
 				foreach ($day_names as $day_in_english => $day_in_spanish) {
@@ -92,16 +91,16 @@ class Buttons extends CI_Controller
 				$json_name = $button_path . DIRECTORY_SEPARATOR . date('Ymd\THisv') . '.json';
 
 				if (file_put_contents($json_name, json_encode($jsonData))) {
-					$this->session->set_flashdata('success', 'Botón creado correctamente');
-					redirect('buttons');
+					$this->session->set_flashdata('success', 'Ui toolkit creado correctamente');
+					redirect('uitoolkit');
 				} else {
 					$this->session->set_flashdata('error', 'No se pudo crear el botón');
-					$this->load->view('layout', ['content' => $this->load->view('buttons/create', ['data' => ['active_page' => 'buttons']], true)]);
+					$this->load->view('layout', ['content' => $this->load->view('uitoolkit/create', ['data' => ['active_page' => 'uitoolkit']], true)]);
 				}
 			}
 		} else {
 			// Not a POST request
-			$this->load->view('layout', ['content' => $this->load->view('buttons/create', ['data' => ['active_page' => 'buttons']], true)]);
+			$this->load->view('layout', ['content' => $this->load->view('uitoolkit/create', ['data' => ['active_page' => 'uitoolkit']], true)]);
 		}
 	}
 
@@ -123,7 +122,7 @@ class Buttons extends CI_Controller
 			$jsonData = array(
 				'description' => $data['description'],
 				'enable' => isset($data['enable']),
-				'telephone' => $data['telephone'],
+				'html_code' => htmlspecialchars(trim($data['html_code'])),
 				'schedules' => array(
 					'monday' => array(
 						'enable' => isset($data['monday_enable']),
@@ -164,44 +163,38 @@ class Buttons extends CI_Controller
 			);
 
 			if (file_put_contents($json_name, json_encode($jsonData))) {
-				$this->session->set_flashdata('success', 'Botón editado correctamente');
+				$this->session->set_flashdata('success', 'UI Toolkit editado correctamente');
 			} else {
-				$this->session->set_flashdata('error', 'No se pudo editar el botón');
+				$this->session->set_flashdata('error', 'No se pudo editar el UI Toolkit');
 			}
 
 			// redirect to index
-			redirect('buttons');
+			redirect('uitoolkit');
 		}
 
 		$existingData['filename'] = $b64_filename;
 
-		$this->load->view('layout', ['content' => $this->load->view('buttons/edit', ['json' => $existingData, 'data' => ['active_page' => 'buttons']], true)]);
+		$this->load->view('layout', ['content' => $this->load->view('uitoolkit/edit', ['json' => $existingData, 'data' => ['active_page' => 'uitoolkit']], true)]);
 	}
 
 	public function delete($b64_filename = null)
 	{
 		$button_path = $this->buttons_dir;
 		$json_name = $button_path . DIRECTORY_SEPARATOR . base64_decode($b64_filename) . '.json';
-		$css_name = $button_path . DIRECTORY_SEPARATOR . base64_decode($b64_filename) . '.css';
 
 		// Comprueba si el archivo existe antes de intentar eliminarlo
 		if (file_exists($json_name)) {
 			unlink($json_name);
 		}
 
-		// Aquí asumo que también quieres eliminar el archivo .css correspondiente
-		if (file_exists($css_name)) {
-			unlink($css_name);
-		}
-
 		// redirigir al index después de eliminar
-		redirect('buttons');
+		redirect('uitoolkit');
 	}
 
 
 	public function deploy($b64_filename)
 	{
-		$js_url = site_url('buttons/js/' . $b64_filename . '.js');
+		$js_url = site_url('uitoolkit/js/' . $b64_filename . '.js');
 
 		$script = <<<SCRIPT
 		<script>
@@ -215,18 +208,15 @@ class Buttons extends CI_Controller
 		</script>
 		SCRIPT;
 
-		$this->load->view('layout', ['content' => $this->load->view('buttons/deploy', [
+		$this->load->view('layout', ['content' => $this->load->view('uitoolkit/deploy', [
 			'script' => htmlentities($script),
-			'data' => ['active_page' => 'buttons']
+			'data' => ['active_page' => 'uitoolkit']
 		], true)]);
 	}
 
 	public function Js($b64_filename)
 	{
-		$css_url = site_url('buttons/css/' . $b64_filename . '.css');
 		$data = json_decode(file_get_contents($this->buttons_dir . DIRECTORY_SEPARATOR . base64_decode($b64_filename) . '.json'), true);
-
-		$telephone = $data['telephone'];
 
 		// Obtén la fecha y hora actuales
 		$now = new DateTime();
@@ -247,52 +237,20 @@ class Buttons extends CI_Controller
 				->set_output('');
 		}
 
+		$html = htmlspecialchars_decode($data['html_code']);
+
+
 		$script = <<<SCRIPT
-			(function () {
-				let div = document.createElement("div");
-				div.setAttribute('id', 'whatsapp-buttons-container');
-				div.style.position = 'fixed';
-				div.style.bottom = 0;
-				div.style.right = 0;
-				div.style.zIndex = 999;
-				let shadow = div.attachShadow({ mode: "open" });
-
-				let link = document.createElement('link');
-				link.setAttribute('rel', 'stylesheet');
-				let id = (Math.random() + 1).toString(36).substring(7);
-				link.setAttribute('href', '{$css_url}?v=' + id);
-				shadow.appendChild(link);
-
-				let button = document.createElement('div');
-				button.classList.add('btn');
-
-				let a = document.createElement('a');
-				a.setAttribute('href', 'https://api.whatsapp.com/send?phone=$telephone');
-				a.setAttribute('target', '_blank');
-				a.appendChild(button);
-
-				shadow.appendChild(a);
-
-				document.body.prepend(div);
-			})(); 
-		SCRIPT;
+        (function () {
+            let div = document.createElement("div");
+            div.innerHTML = `$html`;
+            document.body.prepend(div);
+        })();
+    SCRIPT;
 
 		return $this->output
 			->set_status_header(200)
 			->set_content_type('application/javascript')
 			->set_output($script);
-	}
-
-
-	public function Css($b64_filename)
-	{
-		$filename = base64_decode($b64_filename);
-
-		$css_string = file_get_contents($this->buttons_dir . $filename . ".css");
-
-		return $this->output
-			->set_status_header(200)
-			->set_content_type('text/css')
-			->set_output($css_string);
 	}
 }

@@ -5,10 +5,10 @@
             <div class="col">
                 <!-- Page pre-title -->
                 <div class="page-pretitle">
-                    Btón
+                    UI Toolkit
                 </div>
                 <h2 class="page-title">
-                    Desplegar Botón
+                    Desplegar UI Toolkit
                 </h2>
             </div>
         </div>

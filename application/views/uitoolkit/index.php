@@ -37,23 +37,23 @@
             <div class="col">
                 <!-- Page pre-title -->
                 <div class="page-pretitle">
-                    Botón
+                    UI Toolkit
                 </div>
                 <h2 class="page-title">
-                    Lista de botones
+                    Lista de UI Toolkit
                 </h2>
             </div>
             <!-- Page title actions -->
             <div class="col-auto ms-auto d-print-none">
                 <div class="btn-list">
-                    <a href="<?php echo site_url('buttons/create'); ?>" class="btn btn-primary d-none d-sm-inline-block">
+                    <a href="<?php echo site_url('uitoolkit/create'); ?>" class="btn btn-primary d-none d-sm-inline-block">
                         <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <path d="M12 5l0 14" />
                             <path d="M5 12l14 0" />
                         </svg>
-                        Nuevo Botón
+                        Nuevo UI Toolkit
                     </a>
                     <a href="#" class="btn btn-primary d-sm-none btn-icon">
                         <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -94,9 +94,9 @@
                                         <td> <span class="badge  <?= ($file["content"]['enable']) ? 'bg-green' : 'bg-red' ?>  "><?= ($file["content"]['enable']) ? 'Active' : 'Disable' ?></span></td>
                                         <td>
                                             <div class="btn-list flex-nowrap">
-                                                <a href="<?php echo site_url('buttons/edit/' . $file["b64_filename"]); ?>" class="btn btn-primary">Editar</a>
-                                                <a href="<?php echo site_url('buttons/deploy/' . $file["b64_filename"]); ?>" class="btn btn-dark">Desplegar</a>
-                                                <a href="<?php echo site_url('buttons/delete/' . $file["b64_filename"]); ?>" class="btn btn-danger" onclick="return confirm('¿Esta seguro que desea eliminar este item?');">Eliminar</a>
+                                                <a href="<?php echo site_url('uitoolkit/edit/' . $file["b64_filename"]); ?>" class="btn btn-primary">Editar</a>
+                                                <a href="<?php echo site_url('uitoolkit/deploy/' . $file["b64_filename"]); ?>" class="btn btn-dark">Desplegar</a>
+                                                <a href="<?php echo site_url('uitoolkit/delete/' . $file["b64_filename"]); ?>" class="btn btn-danger" onclick="return confirm('¿Esta seguro que desea eliminar este item?');">Eliminar</a>
 
                                             </div>
 

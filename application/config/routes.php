@@ -49,11 +49,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['buttons'] = 'buttons/index';
-$route['buttons/create'] = 'buttons/create';
-$route['buttons/deploy/(:any)'] = 'buttons/deploy/$1';
-$route['buttons/js/(:any).js'] = 'buttons/js/$1';
-$route['buttons/css/(:any).css'] = 'buttons/css/$1';
+$route['uitoolkit'] = 'uitoolkit/index';
+$route['uitoolkit/create'] = 'uitoolkit/create';
+$route['uitoolkit/deploy/(:any)'] = 'uitoolkit/deploy/$1';
+$route['uitoolkit/js/(:any).js'] = 'uitoolkit/js/$1';
+$route['uitoolkit/css/(:any).css'] = 'uitoolkit/css/$1';
 
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';

@@ -45,7 +45,7 @@ if (isset($data)) {
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <path d="M12 3a8 8 0 0 1 7.996 7.75l.004 .25l-.001 6.954l.01 .103a2.78 2.78 0 0 1 -1.468 2.618l-.163 .08c-1.053 .475 -2.283 .248 -3.129 -.593l-.137 -.146a.65 .65 0 0 0 -1.024 0a2.65 2.65 0 0 1 -4.176 0a.65 .65 0 0 0 -.512 -.25c-.2 0 -.389 .092 -.55 .296a2.78 2.78 0 0 1 -4.859 -2.005l.008 -.091l.001 -6.966l.004 -.25a8 8 0 0 1 7.996 -7.75zm2.82 10.429a1 1 0 0 0 -1.391 -.25a2.5 2.5 0 0 1 -2.858 0a1 1 0 0 0 -1.142 1.642a4.5 4.5 0 0 0 5.142 0a1 1 0 0 0 .25 -1.392zm-4.81 -4.429l-.127 .007a1 1 0 0 0 .117 1.993l.127 -.007a1 1 0 0 0 -.117 -1.993zm4 0l-.127 .007a1 1 0 0 0 .117 1.993l.127 -.007a1 1 0 0 0 -.117 -1.993z" stroke-width="0" fill="currentColor"></path>
                         </svg>
-                        Buttoneitor
+                        Toolsneitor
                     </a>
                 </h1>
                 <div class="navbar-nav flex-row d-lg-none">
@@ -113,18 +113,22 @@ if (isset($data)) {
                                 </span>
                             </a>
                         </li>
-                        <li class="nav-item <?php if ($nav_active_item == 'buttons') echo 'active'; ?>">
-                            <a class="nav-link" href="<?php echo site_url('buttons'); ?>">
+                        <li class="nav-item <?php if ($nav_active_item == 'uitoolkit') echo 'active'; ?>">
+                            <a class="nav-link" href="<?php echo site_url('uitoolkit'); ?>">
 
                                 <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-whatsapp" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-tools" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"></path>
-                                        <path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"></path>
+                                        <path d="M3 21h4l13 -13a1.5 1.5 0 0 0 -4 -4l-13 13v4"></path>
+                                        <path d="M14.5 5.5l4 4"></path>
+                                        <path d="M12 8l-5 -5l-4 4l5 5"></path>
+                                        <path d="M7 8l-1.5 1.5"></path>
+                                        <path d="M16 12l5 5l-4 4l-5 -5"></path>
+                                        <path d="M16 17l-1.5 1.5"></path>
                                     </svg>
                                 </span>
                                 <span class="nav-link-title">
-                                    Botones
+                                    UI Toolkit
                                 </span>
                             </a>
                         </li>
