@@ -47,7 +47,8 @@
                          <table class="table table-vcenter card-table">
                              <thead>
                                  <tr>
-                                     <th>Buttons Description</th>
+                                     <th>Id</th>
+                                     <th>Description</th>
                                      <th>Status</th>
                                      <th class="w-1"></th>
                                  </tr>
@@ -57,7 +58,8 @@
                                    
                                      <tr>
                                          <td> <?php echo $file["filename"] ?></td>
-                                         <td> <span class="badge bg-green">Acive</span></td>
+                                         <td> <?php echo $file["content"]['description'] ?></td>
+                                         <td> <span class="badge  <?= ($file["content"]['enable'])? 'bg-green': 'bg-red' ?>  "><?= ($file["content"]['enable'])? 'Active': 'Disable' ?></span></td>
                                          <td>
                                              <div class="btn-list flex-nowrap">
                                                  <a href="<?php echo site_url('buttons/edit/' . $file["b64_filename"]); ?>" class="btn btn-primary">Edit</a>

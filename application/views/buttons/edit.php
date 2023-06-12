@@ -1,4 +1,3 @@
-   
    <!-- Justo antes de tu formulario, o donde prefieras mostrar el mensaje -->
 <?php if($this->session->flashdata('success')): ?>
     <div class="alert alert-success alert-dismissible">
@@ -39,14 +38,14 @@
                         <div class="col-12">
                             <div class="mb-3">
                                 <label class="form-label" for="description">Descripción</label>
-                                <input class="form-control" type="text" id="description" name="description" value="<?= $description ?? '' ?>" placeholder="Input Description">
+                                <input class="form-control" type="text" id="description" name="description" value="<?= $json['description'] ?? '' ?>" placeholder="Input Description">
                             </div>
 
                             <div class="mb-3">
                                 <div class="form-label" for="enable">Status</div>
                                 <div>
                                     <label class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="enable" name="enable" <?= $enable ? 'checked' : '' ?>>
+                                        <input class="form-check-input" type="checkbox" id="enable" name="enable" <?= $json['enable'] ? 'checked' : '' ?>>
                                         <span class="form-check-label">Active</span>
                                     </label>
                                 </div>
@@ -58,7 +57,7 @@
                                     $dias = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
                                     foreach ($dias as $dia) {
-                                        $schedule = $schedules[$dia] ?? null;
+                                        $schedule = $json['schedules'][$dia] ?? null;
                                     ?>
                                         <div class="col-lg-3 col-md-12 mb-4">
                                             <h3><?= ucfirst($dia) ?></h3>

@@ -13,7 +13,6 @@ class Buttons extends CI_Controller
 
 	public function index()
 	{
-		$data['active_page'] = 'buttons';
 		$json_files = glob($this->buttons_dir  .  "*.json");
 
 		$files = [];
@@ -21,12 +20,14 @@ class Buttons extends CI_Controller
 			$info = pathinfo($json_file);
 			$info['path'] = $json_file;
 			$info['b64_filename'] = base64_encode($info["filename"]);
+			$info['content'] = json_decode(file_get_contents($json_file), true);
+
 			$files[] = $info;
 		}
 
 		$this->load->view('layout', ['content' => $this->load->view('buttons/index', [
 			'files' => $files,
-			'data' => $data
+			'data' => ['active_page' => 'buttons']
 		], true),]);
 	}
 
@@ -34,7 +35,6 @@ class Buttons extends CI_Controller
 	public function create()
 	{
 		$this->load->helper('form');
-		
 		$this->load->library('session');
 
 		if ($this->input->method() == 'post') {
@@ -97,7 +97,7 @@ class Buttons extends CI_Controller
 		}
 
 
-		$this->load->view('layout', ['content' => $this->load->view('buttons/create', null, true)]);
+		$this->load->view('layout', ['content' => $this->load->view('buttons/create', ['data' => ['active_page' => 'buttons']], true)]);
 	}
 
 	public function edit($b64_filename = null)
@@ -157,17 +157,16 @@ class Buttons extends CI_Controller
 				)
 			);
 
-
 			if (file_put_contents($json_name, json_encode($jsonData))) {
 				$this->session->set_flashdata('success', 'Button edited successfully');
 			} else {
 				$this->session->set_flashdata('error', 'Error while editing the button');
 			}
 		}
+
 		$existingData['filename'] = $b64_filename;
 
-
-		$this->load->view('layout', ['content' => $this->load->view('buttons/edit', $existingData, true)]);
+		$this->load->view('layout', ['content' => $this->load->view('buttons/edit', ['json' => $existingData, 'data' => ['active_page' => 'buttons']], true)]);
 	}
 
 	public function delete($b64_filename = null)
@@ -209,6 +208,7 @@ class Buttons extends CI_Controller
 
 		$this->load->view('layout', ['content' => $this->load->view('buttons/deploy', [
 			'script' => htmlentities($script),
+			'data' => ['active_page' => 'buttons']
 		], true)]);
 	}
 
